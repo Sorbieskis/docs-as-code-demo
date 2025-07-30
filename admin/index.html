@@ -4,8 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager - Docs as Code</title>
-  <!-- Include the script that builds the page and powers Decap CMS -->
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   <!-- Include additional styles for better UI -->
   <style>
     body {
@@ -50,9 +48,23 @@
     <button onclick="document.getElementById('setup-notice').style.display='none'">Continue to CMS Interface</button>
   </div>
 
-  <!-- CMS Preview styles -->
+  <!-- Include the script that builds the page and powers Decap CMS -->
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  
+  <!-- CMS Preview styles and initialization -->
   <script>
-    CMS.registerPreviewStyle("https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css");
+    // Wait for DOM and CMS to be ready
+    document.addEventListener('DOMContentLoaded', function() {
+      // Wait a bit more for CMS to fully load
+      setTimeout(function() {
+        if (typeof CMS !== 'undefined') {
+          CMS.registerPreviewStyle("https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css");
+          console.log('Decap CMS loaded successfully');
+        } else {
+          console.error('CMS failed to load');
+        }
+      }, 1000);
+    });
     
     // Add helpful error handling
     window.addEventListener('error', function(e) {
