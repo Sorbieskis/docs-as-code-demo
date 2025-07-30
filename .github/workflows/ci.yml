@@ -1,0 +1,234 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  lint-and-validate:
+    runs-on: ubuntu-latest
+    name: Lint and Validate Files
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Python dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install yamllint
+
+      - name: Install Node.js for Markdown linting
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install markdownlint
+        run: |
+          npm install -g markdownlint-cli2
+
+      - name: Lint YAML files
+        run: |
+          yamllint mkdocs.yml docs/admin/config.yml .github/workflows/*.yml
+
+      - name: Lint Markdown files
+        run: |
+          markdownlint-cli2 "docs/**/*.md"
+
+      - name: Validate Markdown frontmatter
+        run: |
+          python -c "
+          import yaml
+          import os
+          import sys
+          
+          def validate_frontmatter(filepath):
+              with open(filepath, 'r') as f:
+                  content = f.read()
+              
+              if content.startswith('---'):
+                  try:
+                      parts = content.split('---', 2)
+                      if len(parts) >= 3:
+                          frontmatter = yaml.safe_load(parts[1])
+                          # Check required fields
+                          required_fields = ['title', 'author', 'date']
+                          for field in required_fields:
+                              if field not in frontmatter:
+                                  print(f'ERROR: Missing required field {field} in {filepath}')
+                                  return False
+                          print(f'OK: {filepath}')
+                          return True
+                      else:
+                          print(f'ERROR: Invalid frontmatter format in {filepath}')
+                          return False
+                  except yaml.YAMLError as e:
+                      print(f'ERROR: Invalid YAML in {filepath}: {e}')
+                      return False
+              else:
+                  print(f'WARNING: No frontmatter in {filepath}')
+                  return True
+          
+          # Validate all markdown files
+          success = True
+          for root, dirs, files in os.walk('docs'):
+              for file in files:
+                  if file.endswith('.md'):
+                      filepath = os.path.join(root, file)
+                      if not validate_frontmatter(filepath):
+                          success = False
+          
+          if not success:
+              sys.exit(1)
+          "
+
+  build-verification:
+    runs-on: ubuntu-latest
+    name: Build Verification
+    needs: [lint-and-validate]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Build MkDocs site (strict mode)
+        env:
+          ENABLE_PDF_EXPORT: 1
+        run: |
+          mkdocs build --strict --verbose
+
+      - name: Verify HTML output
+        run: |
+          # Check that key files exist
+          if [ ! -f "site/index.html" ]; then
+            echo "::error::Main index.html not generated"
+            exit 1
+          fi
+          
+          if [ ! -d "site/assets" ]; then
+            echo "::error::Assets directory not generated"
+            exit 1
+          fi
+          
+          # Check for broken links in HTML (basic check)
+          if grep -r "href.*404" site/ > /dev/null; then
+            echo "::error::Found potential broken links in generated HTML"
+            exit 1
+          fi
+          
+          echo "HTML build verification successful"
+
+      - name: Install Pandoc and LaTeX for PDF testing
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc texlive-xetex texlive-fonts-recommended texlive-plain-generic
+
+      - name: Test PDF generation
+        run: |
+          # Test PDF generation with Pandoc
+          python -c "
+          import yaml
+          with open('docs/index.md', 'r') as f:
+              content = f.read()
+          if content.startswith('---'):
+              parts = content.split('---', 2)
+              if len(parts) >= 3:
+                  frontmatter = yaml.safe_load(parts[1])
+                  print('title=' + str(frontmatter.get('title', 'Test Title')))
+                  print('author=' + str(frontmatter.get('author', 'Test Author')))
+                  print('date=' + str(frontmatter.get('date', '2024-01-01')))
+          " > pdf_vars.txt
+          
+          source pdf_vars.txt
+          
+          pandoc docs/index.md \
+            --template=template.latex \
+            --pdf-engine=xelatex \
+            --variable=title:"${title}" \
+            --variable=author:"${author}" \
+            --variable=date:"${date}" \
+            --toc \
+            --number-sections \
+            -o test-manual.pdf
+          
+          # Verify PDF was created and has reasonable size
+          if [ ! -f "test-manual.pdf" ]; then
+            echo "::error::PDF file was not created"
+            exit 1
+          fi
+          
+          if [ $(stat -c%s "test-manual.pdf") -lt 10240 ]; then
+            echo "::error::PDF file is unexpectedly small (< 10KB)"
+            exit 1
+          fi
+          
+          echo "PDF generation verification successful"
+          ls -la test-manual.pdf
+
+      - name: Upload build artifacts for inspection
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: build-debug-artifacts
+          path: |
+            site/
+            test-manual.pdf
+
+  security-scan:
+    runs-on: ubuntu-latest
+    name: Security Scan
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy scan results
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+  test-summary:
+    runs-on: ubuntu-latest
+    name: Test Summary
+    needs: [lint-and-validate, build-verification, security-scan]
+    if: always()
+    steps:
+      - name: Check job results
+        run: |
+          echo "Lint and Validate: ${{ needs.lint-and-validate.result }}"
+          echo "Build Verification: ${{ needs.build-verification.result }}"
+          echo "Security Scan: ${{ needs.security-scan.result }}"
+          
+          if [ "${{ needs.lint-and-validate.result }}" != "success" ] || 
+             [ "${{ needs.build-verification.result }}" != "success" ] || 
+             [ "${{ needs.security-scan.result }}" != "success" ]; then
+            echo "::error::One or more CI jobs failed"
+            exit 1
+          else
+            echo "::notice::All CI checks passed successfully"
+          fi

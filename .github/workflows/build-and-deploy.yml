@@ -1,0 +1,189 @@
+name: Build and Deploy Docs
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy-website:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Configure Git for deployment
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Build and deploy MkDocs
+        env:
+          ENABLE_PDF_EXPORT: 1
+        run: |
+          mkdocs gh-deploy --force --verbose
+
+  generate-pdf:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Pandoc and LaTeX
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc texlive-xetex texlive-fonts-recommended texlive-plain-generic
+
+      - name: Set up Python (for metadata extraction)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: |
+          pip install pyyaml
+
+      - name: Extract metadata and generate PDF
+        run: |
+          # Extract metadata from docs/index.md
+          python -c "
+          import yaml
+          import re
+          
+          with open('docs/index.md', 'r') as f:
+              content = f.read()
+          
+          # Extract YAML frontmatter
+          if content.startswith('---'):
+              parts = content.split('---', 2)
+              if len(parts) >= 3:
+                  frontmatter = yaml.safe_load(parts[1])
+                  body = parts[2].strip()
+              else:
+                  frontmatter = {}
+                  body = content
+          else:
+              frontmatter = {}
+              body = content
+          
+          # Set default values
+          title = frontmatter.get('title', 'Ventil Docs Demo')
+          author = frontmatter.get('author', 'Ventil Documentation Team')
+          date = frontmatter.get('date', '2024-01-30')
+          
+          # Write temporary markdown file without frontmatter
+          with open('temp_content.md', 'w') as f:
+              f.write(body)
+          
+          print(f'Title: {title}')
+          print(f'Author: {author}')
+          print(f'Date: {date}')
+          "
+
+      - name: Generate PDF with Pandoc
+        run: |
+          # Extract metadata for Pandoc
+          TITLE=$(python -c "
+          import yaml
+          with open('docs/index.md', 'r') as f:
+              content = f.read()
+          if content.startswith('---'):
+              parts = content.split('---', 2)
+              if len(parts) >= 3:
+                  frontmatter = yaml.safe_load(parts[1])
+                  print(frontmatter.get('title', 'Ventil Docs Demo'))
+              else:
+                  print('Ventil Docs Demo')
+          else:
+              print('Ventil Docs Demo')
+          ")
+          
+          AUTHOR=$(python -c "
+          import yaml
+          with open('docs/index.md', 'r') as f:
+              content = f.read()
+          if content.startswith('---'):
+              parts = content.split('---', 2)
+              if len(parts) >= 3:
+                  frontmatter = yaml.safe_load(parts[1])
+                  print(frontmatter.get('author', 'Ventil Documentation Team'))
+              else:
+                  print('Ventil Documentation Team')
+          else:
+              print('Ventil Documentation Team')
+          ")
+          
+          DATE=$(python -c "
+          import yaml
+          from datetime import datetime
+          with open('docs/index.md', 'r') as f:
+              content = f.read()
+          if content.startswith('---'):
+              parts = content.split('---', 2)
+              if len(parts) >= 3:
+                  frontmatter = yaml.safe_load(parts[1])
+                  date_val = frontmatter.get('date', datetime.now().strftime('%Y-%m-%d'))
+                  if isinstance(date_val, str):
+                      print(date_val)
+                  else:
+                      print(date_val.strftime('%Y-%m-%d'))
+              else:
+                  print(datetime.now().strftime('%Y-%m-%d'))
+          else:
+              print(datetime.now().strftime('%Y-%m-%d'))
+          ")
+          
+          # Generate PDF using Pandoc with XeLaTeX
+          pandoc docs/index.md \
+            --template=template.latex \
+            --pdf-engine=xelatex \
+            --variable=title:"$TITLE" \
+            --variable=author:"$AUTHOR" \
+            --variable=date:"$DATE" \
+            --toc \
+            --number-sections \
+            --highlight-style=github \
+            -o manual.pdf
+          
+          # Verify PDF was created
+          if [ -f manual.pdf ]; then
+            echo "PDF generated successfully"
+            ls -la manual.pdf
+          else
+            echo "Failed to generate PDF"
+            exit 1
+          fi
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: documentation-pdf
+          path: manual.pdf
+          retention-days: 30
+
+      - name: Upload PDF to release (if tag)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: manual.pdf
