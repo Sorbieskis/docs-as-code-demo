@@ -2,7 +2,6 @@ backend:
   name: github
   repo: Sorbieskis/docs-as-code-demo
   branch: main
-  client_id: Ov23liAVLsPxilZTUME6
 
 # For local testing only
 # backend:
@@ -13,8 +12,8 @@ backend:
 #   name: git-gateway
 #   branch: main
 
-# Local development (disable for production)
-# local_backend: true
+# Local development with decap-server (port 8081)
+local_backend: true
 
 # Media files
 media_folder: "docs/assets/images"
