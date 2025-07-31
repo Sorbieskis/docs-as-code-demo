@@ -1,6 +1,6 @@
 site_name: Documentation Demo
 site_description: Docs-as-code demonstration
-site_url: https://sorbieskis.github.io/docs-as-code-demo/
+# site_url: https://sorbieskis.github.io/docs-as-code-demo/  # Commented for local development
 
 repo_url: https://github.com/Sorbieskis/docs-as-code-demo
 repo_name: sorbieskis/docs-as-code-demo

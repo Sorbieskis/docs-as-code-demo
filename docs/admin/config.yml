@@ -1,6 +1,5 @@
 backend:
-  name: github
-  repo: Sorbieskis/docs-as-code-demo
+  name: git-gateway
   branch: main
 
 local_backend: true
