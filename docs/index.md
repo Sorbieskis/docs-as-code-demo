@@ -1,19 +1,18 @@
 ---
-title: Documentation Demo
+title: Documentation Test
 author: Demo Project
 date: 2024
 ---
-
 # Documentation Demo
 
 This demonstrates a docs-as-code workflow with automated builds and web-based editing.
 
 ## Features
 
-- Markdown-based content
-- Web-based editing interface  
-- Automated website generation
-- PDF export capability
+* Markdown-based content
+* Web-based editing interface  
+* Automated website generation
+* PDF export capability
 
 ## Getting Started
 
@@ -25,10 +24,10 @@ This demonstrates a docs-as-code workflow with automated builds and web-based ed
 
 The system combines:
 
-- **MkDocs** for static site generation
-- **Decap CMS** for web-based editing
-- **GitHub Actions** for automation
-- **LaTeX** for PDF generation
+* **MkDocs** for static site generation
+* **Decap CMS** for web-based editing
+* **GitHub Actions** for automation
+* **LaTeX** for PDF generation
 
 ## Sample Content
 
@@ -42,9 +41,9 @@ def build_docs():
 
 ### Table
 
-| Output | Format | Status |
-|--------|--------|--------|
-| Website | HTML | ✅ |
-| PDF | LaTeX | ✅ |
+| Output  | Format | Status |
+| ------- | ------ | ------ |
+| Website | HTML   | ✅      |
+| PDF     | LaTeX  | ✅      |
 
 This demonstrates professional documentation workflow capabilities.
