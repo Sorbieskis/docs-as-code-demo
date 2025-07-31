@@ -11,10 +11,6 @@
       
       
       
-        <link rel="prev" href="../solution/">
-      
-      
-        <link rel="next" href="../demo/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -22,7 +18,7 @@
     
     
       
-        <title>Architecture - Project Unidoc</title>
+        <title>Home: A New Standard - Project Unidoc</title>
       
     
     
@@ -74,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#title-architecture" class="md-skip">
+        <a href="#live-demonstration-the-modern-web-based-manual" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +104,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Architecture
+              Home: A New Standard
             
           </span>
         </div>
@@ -260,11 +256,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../structure/" class="md-tabs__link">
         
   
   
@@ -472,30 +466,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Architecture
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../structure/" class="md-nav__link">
         
   
   
@@ -506,90 +480,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#title-architecture" class="md-nav__link">
-    <span class="md-ellipsis">
-      title: "Architecture"
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#project-structure-guide" class="md-nav__link">
-    <span class="md-ellipsis">
-      Project Structure Guide
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Project Structure Guide">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-high-level-repository-structure" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. High-Level Repository Structure
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-component-based-authoring-model" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. Component-Based Authoring Model
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="2. Component-Based Authoring Model">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#types-of-content-files" class="md-nav__link">
-    <span class="md-ellipsis">
-      Types of Content Files
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#how-it-comes-together" class="md-nav__link">
-    <span class="md-ellipsis">
-      How It Comes Together
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -899,86 +789,22 @@
   
 
 
-<hr />
-<h2 id="title-architecture">title: "Architecture"<a class="headerlink" href="#title-architecture" title="Permanent link">&para;</a></h2>
-<h1 id="project-structure-guide">Project Structure Guide<a class="headerlink" href="#project-structure-guide" title="Permanent link">&para;</a></h1>
-<p>This document outlines the repository's folder structure and the component-based authoring model used by Project Unidoc. Adhering to this structure is critical for ensuring the automation pipelines function correctly.</p>
-<h2 id="1-high-level-repository-structure">1. High-Level Repository Structure<a class="headerlink" href="#1-high-level-repository-structure" title="Permanent link">&para;</a></h2>
-<p>The repository is organized to clearly separate source content, configuration, automation workflows, and final outputs.</p>
-<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">.</span>
-<span class="l l-Scalar l-Scalar-Plain">├── .github/</span>
-<span class="l l-Scalar l-Scalar-Plain">│   └── workflows/</span>
-<span class="l l-Scalar l-Scalar-Plain">│       ├── build-and-deploy.yml</span>
-<span class="l l-Scalar l-Scalar-Plain">│       └── ci.yml</span>
-<span class="l l-Scalar l-Scalar-Plain">├── docs/</span>
-<span class="l l-Scalar l-Scalar-Plain">│   ├── admin/</span>
-<span class="l l-Scalar l-Scalar-Plain">│   │   ├── config.yml</span>
-<span class="l l-Scalar l-Scalar-Plain">│   │   └── index.html</span>
-<span class="l l-Scalar l-Scalar-Plain">│   ├── assets/</span>
-<span class="l l-Scalar l-Scalar-Plain">│   │   └── images/</span>
-<span class="l l-Scalar l-Scalar-Plain">│   ├── includes/</span>
-<span class="l l-Scalar l-Scalar-Plain">│   ├── parts/</span>
-<span class="l l-Scalar l-Scalar-Plain">│   └── index.md</span>
-<span class="l l-Scalar l-Scalar-Plain">├── site/</span>
-<span class="l l-Scalar l-Scalar-Plain">├── tests/</span>
-<span class="l l-Scalar l-Scalar-Plain">├── .gitignore</span>
-<span class="l l-Scalar l-Scalar-Plain">├── mkdocs.yml</span>
-<span class="l l-Scalar l-Scalar-Plain">├── README.md</span>
-<span class="l l-Scalar l-Scalar-Plain">├── requirements.txt</span>
-<span class="l l-Scalar l-Scalar-Plain">└── template.latex</span>
-</code></pre></div>
-<ul>
-<li><code>.github/workflows/</code>: Contains the CI/CD automation scripts.</li>
-<li><code>docs/</code>: This is the heart of the documentation, containing all source Markdown files and assets.</li>
-<li><code>docs/admin/</code>: Holds the configuration for the Decap CMS web editor.</li>
-<li><code>site/</code>: This directory is automatically generated by MkDocs during the build process and is ignored by Git.</li>
-<li><code>tests/</code>: Contains integration and unit tests for verifying the system's integrity.</li>
-<li><code>mkdocs.yml</code>: The primary configuration file for the MkDocs static site generator.</li>
-<li><code>requirements.txt</code>: Lists the Python dependencies required for the project.</li>
-<li><code>template.latex</code>: The master LaTeX template that defines the style and structure of all generated PDF documents.</li>
-</ul>
-<h2 id="2-component-based-authoring-model">2. Component-Based Authoring Model<a class="headerlink" href="#2-component-based-authoring-model" title="Permanent link">&para;</a></h2>
-<p>To adhere to the <strong>DRY (Don't Repeat Yourself)</strong> principle, our manuals are not written as single, monolithic files. Instead, they are assembled from smaller, reusable components.</p>
-<h3 id="types-of-content-files">Types of Content Files<a class="headerlink" href="#types-of-content-files" title="Permanent link">&para;</a></h3>
-<ol>
-<li>
-<p><strong>Master Assembly Files (<code>docs/manual-*.md</code>)</strong></p>
-<ul>
-<li><strong>Purpose:</strong> These are the master files for a complete manual. Their main job is to define the structure of a manual and <em>include</em> the other components in the correct order. <strong>This architecture enables infinite scalability</strong> - adding new manuals requires only creating new assembly files that reference existing or new components.</li>
-<li><strong>Scalability Benefits:</strong><ul>
-<li><strong>Template-driven consistency</strong>: All manuals inherit the same professional structure</li>
-<li><strong>Component reuse</strong>: Common sections (safety, maintenance, contact info) are written once, used everywhere</li>
-<li><strong>Zero-effort standardization</strong>: New products automatically follow established documentation patterns</li>
-<li><strong>Automated cross-manual updates</strong>: Changes to shared components propagate instantly across all manuals</li>
-</ul>
-</li>
-<li><strong>Example (<code>docs/manual-pekos-v2.md</code>):</strong>
-    <div class="highlight"><pre><span></span><code><span class="gh"># Pekos V2 Clamping System Manual</span>
+  <h1>Home: A New Standard</h1>
 
-{!includes/standard-safety-warnings.md!}
-{!parts/pekos-v2-introduction.md!}
-{!parts/pekos-v2-installation.md!}
-{!includes/standard-maintenance-schedule.md!}
-</code></pre></div></li>
-</ul>
-</li>
-<li>
-<p><strong>Unique Part Files (<code>docs/parts/</code>)</strong></p>
+<p>A New Standard for Our Documentation</p>
+<p>Hey</p>
+<p>Test</p>
+<p>This presentation demonstrates the high-quality, professional standard now achievable for all company technical manuals through <strong>Project Unidoc.</strong></p>
+<p>The core of this new standard is delivering documentation that is not only accurate and easy to maintain, but also highly accessible and user-friendly.</p>
+<h3 id="live-demonstration-the-modern-web-based-manual">Live Demonstration: The Modern Web-Based Manual<a class="headerlink" href="#live-demonstration-the-modern-web-based-manual" title="Permanent link">&para;</a></h3>
+<p>As the first step, we'll look at the live, searchable website version of our software manual.</p>
+<p><strong>Key Features to Notice:</strong></p>
 <ul>
-<li><strong>Purpose:</strong> This directory holds content that is unique to a specific machine or component. These are the substantial chapters of a manual.</li>
-<li><strong>Examples:</strong> <code>pekos-v2-installation.md</code>, <code>crs10-software-guide.md</code>.</li>
+<li><strong>Instant Access:</strong> The site is fast, responsive, and works in any modern browser.</li>
+<li><strong>Powerful Search:</strong> The entire manual is indexed for instant, accurate search results, making it incredibly easy for users to find the information they need.</li>
+<li><strong>Always Up-to-Date:</strong> Because this site is built automatically from our central source, it is guaranteed to always reflect the latest approved information.</li>
+<li><strong>Future-Ready:</strong> The same system that builds this website can also package it into a standalone desktop app for offline use by our service engineers in the future.</li>
 </ul>
-</li>
-<li>
-<p><strong>Reusable Include Files (<code>docs/includes/</code>)</strong></p>
-<ul>
-<li><strong>Purpose:</strong> This directory is for "Lego bricks"—small, persistent snippets of content that are identical across multiple manuals.</li>
-<li><strong>Examples:</strong> <code>standard-safety-warnings.md</code>, <code>company-contact-info.md</code>.</li>
-</ul>
-</li>
-</ol>
-<h3 id="how-it-comes-together">How It Comes Together<a class="headerlink" href="#how-it-comes-together" title="Permanent link">&para;</a></h3>
-<p>The build process is configured to understand this include syntax. When it builds a manual, it starts with the <strong>Master Assembly File</strong>, reads the list of includes, and stitches them together into a single, complete document before converting it to its final format.</p>
 
 
 
