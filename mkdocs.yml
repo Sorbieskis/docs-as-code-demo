@@ -18,7 +18,8 @@ plugins:
       copyright: "2024"
       cover_title: Documentation Demo
       output_path: pdf/manual.pdf
-      enabled_if_env: ENABLE_PDF_EXPORT
+      cover_subtitle: Automated Documentation Pipeline
+      custom_template_path: template.latex
 
 nav:
   - Home: index.md
