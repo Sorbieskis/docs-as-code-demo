@@ -1,5 +1,9 @@
-Solving Our Core Documentation Challenges
-=========================================
+
+---
+title: "The Problem"
+---
+
+# Solving Our Core Documentation Challenges
 
 "Project Unidoc" was designed to solve specific, long-standing problems with the previous documentation process. The old workflow, while familiar, created significant inefficiencies and quality control issues.
 

@@ -4,8 +4,59 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Content Manager</title>
+  <script>
+    window.CMS_MANUAL_INIT = true;
+  </script>
 </head>
 <body>
+  <div id="nc-root"></div>
+  
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const config = {
+        backend: {
+          name: "git-gateway",
+          branch: "main"
+        },
+        local_backend: true,
+        media_folder: "docs/assets/images",
+        public_folder: "/assets/images",
+        collections: [
+          {
+            name: "pages",
+            label: "Manuals",
+            label_singular: "Manual",
+            folder: "docs",
+            create: true,
+            delete: false,
+            slug: "{{slug}}",
+            fields: [
+              {
+                name: "title",
+                label: "Page Title",
+                widget: "string",
+                hint: "The main title of the document that will appear in the navigation."
+              },
+              {
+                name: "body",
+                label: "Main Content",
+                widget: "markdown",
+                hint: "Edit content here. Use the toolbar for formatting."
+              }
+            ]
+          }
+        ]
+      };
+
+      try {
+        CMS.init({ config });
+        console.log('CMS initialized successfully');
+      } catch (error) {
+        console.error('CMS initialization failed:', error);
+      }
+    });
+  </script>
 </body>
 </html>

@@ -1,3 +1,8 @@
+
+---
+title: "The Solution"
+---
+
 # The Solution: Project Unidoc
 
 Project Unidoc transforms documentation from a burden into a strategic asset through automated, scalable workflows that eliminate manual processes while ensuring consistency and quality.

@@ -37,6 +37,9 @@ nav:
 
 plugins:
   - search
+  - git-revision-date-localized:
+      type: date
+      locale: en
   - with-pdf:
       author: Project Unidoc Team
       copyright: "2024 Enterprise Documentation Solutions"

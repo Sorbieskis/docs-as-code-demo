@@ -1,3 +1,8 @@
+
+---
+title: "Architecture"
+---
+
 # Project Structure Guide
 
 This document outlines the repository's folder structure and the component-based authoring model used by Project Unidoc. Adhering to this structure is critical for ensuring the automation pipelines function correctly.

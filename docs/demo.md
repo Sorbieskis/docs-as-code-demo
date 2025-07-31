@@ -1,5 +1,9 @@
-Live Demonstration & Next Steps
-===============================
+
+---
+title: "Live Demo"
+---
+
+# Live Demonstration & Next Steps
 
 This section will demonstrate the core workflow that makes the Project Unidoc system so powerful: enabling a non-technical user to safely contribute a change that is then automatically published.
 
