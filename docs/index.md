@@ -1,5 +1,5 @@
 ---
-title: Documentation Test
+title: Documentation Demo
 author: Demo Project
 date: 2024
 ---
