@@ -14,9 +14,6 @@ collections:
     create: true
     slug: "{{slug}}"
     fields:
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Author", name: "author", widget: "string"}
-      - {label: "Date", name: "date", widget: "datetime"}
       - {label: "Content", name: "body", widget: "markdown"}
 
 editor:

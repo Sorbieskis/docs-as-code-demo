@@ -1,44 +1,58 @@
-site_name: Project Unidoc Demo
-site_description: A presentation and demonstration of the Project Unidoc docs-as-code system.
+site_name: Project Unidoc
+site_description: Enterprise Documentation Management System - Scalable multi-manual platform with automated workflows
 
 repo_url: https://github.com/Sorbieskis/docs-as-code-demo
 repo_name: sorbieskis/docs-as-code-demo
 
 theme:
   name: material
+  palette:
+    - scheme: default
+      primary: blue
+      accent: light blue
   features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
     - navigation.top
     - search.highlight
+    - toc.integrate
     - content.code.copy
-  palette:
-    # Palette toggle for light vs dark mode
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      toggle:
-        icon: material/brightness-7
-        name: Switch to dark mode
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      toggle:
-        icon: material/brightness-4
-        name: Switch to light mode
+
+nav:
+  - Home: index.md
+  - Problem: problem.md
+  - Solution: solution.md
+  - Architecture: structure.md
+  - Demo: demo.md
+  - Manuals:
+    - User Guide: manuals/user-guide.md
+    - Admin Manual: manuals/admin-manual.md
+    - API Reference: manuals/api-reference.md
+    - Deployment Guide: manuals/deployment.md
+  - Process: 
+    - Workflow: process/workflow.md
+    - Quality Control: process/quality.md
+  - PRD: PRD.md
 
 plugins:
   - search
-
-# Navigation structure for the presentation
-nav:
-  - 'Home: A New Standard': 'index.md'
-  - 'The Problem': 'problem.md'
-  - 'The Solution': 'solution.md'
-  - 'Live Demo': 'demo.md'
-  - 'Project Structure': 'structure.md'
+  - with-pdf:
+      author: Project Unidoc Team
+      copyright: "2024 Enterprise Documentation Solutions"
+      cover_title: Project Unidoc
+      output_path: pdf/unidoc-manual.pdf
+      cover_subtitle: "Enterprise Documentation Management System"
+      custom_template_path: template.latex
+      enabled_if_env: ENABLE_PDF_EXPORT
 
 markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
   - toc:
       permalink: true
   - tables
   - fenced_code
-  - admonition
-  - pymdownx.details
-  - pymdownx.superfences

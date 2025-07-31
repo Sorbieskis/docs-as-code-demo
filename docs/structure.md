@@ -54,7 +54,12 @@ To adhere to the **DRY (Don't Repeat Yourself)** principle, our manuals are not 
 ### Types of Content Files
 
 1.  **Master Assembly Files (`docs/manual-*.md`)**
-    * **Purpose:** These are the master files for a complete manual. Their main job is to define the structure of a manual and *include* the other components in the correct order.
+    * **Purpose:** These are the master files for a complete manual. Their main job is to define the structure of a manual and *include* the other components in the correct order. **This architecture enables infinite scalability** - adding new manuals requires only creating new assembly files that reference existing or new components.
+    * **Scalability Benefits:**
+        - **Template-driven consistency**: All manuals inherit the same professional structure
+        - **Component reuse**: Common sections (safety, maintenance, contact info) are written once, used everywhere
+        - **Zero-effort standardization**: New products automatically follow established documentation patterns
+        - **Automated cross-manual updates**: Changes to shared components propagate instantly across all manuals
     * **Example (`docs/manual-pekos-v2.md`):**
         ```markdown
         # Pekos V2 Clamping System Manual
