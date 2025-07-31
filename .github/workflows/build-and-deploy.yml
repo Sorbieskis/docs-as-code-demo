@@ -88,8 +88,8 @@ jobs:
               body = content
           
           # Set default values
-          title = frontmatter.get('title', 'Ventil Docs Demo')
-          author = frontmatter.get('author', 'Ventil Documentation Team')
+          title = frontmatter.get('title', 'Documentation Demo')
+          author = frontmatter.get('author', 'Demo Project')
           date = frontmatter.get('date', '2024-01-30')
           
           # Write temporary markdown file without frontmatter
@@ -112,11 +112,11 @@ jobs:
               parts = content.split('---', 2)
               if len(parts) >= 3:
                   frontmatter = yaml.safe_load(parts[1])
-                  print(frontmatter.get('title', 'Ventil Docs Demo'))
+                  print(frontmatter.get('title', 'Documentation Demo'))
               else:
-                  print('Ventil Docs Demo')
+                  print('Documentation Demo')
           else:
-              print('Ventil Docs Demo')
+              print('Documentation Demo')
           ")
           
           AUTHOR=$(python -c "
@@ -127,11 +127,11 @@ jobs:
               parts = content.split('---', 2)
               if len(parts) >= 3:
                   frontmatter = yaml.safe_load(parts[1])
-                  print(frontmatter.get('author', 'Ventil Documentation Team'))
+                  print(frontmatter.get('author', 'Demo Project'))
               else:
-                  print('Ventil Documentation Team')
+                  print('Demo Project')
           else:
-              print('Ventil Documentation Team')
+              print('Demo Project')
           ")
           
           DATE=$(python -c "

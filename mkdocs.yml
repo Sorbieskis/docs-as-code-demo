@@ -15,7 +15,7 @@ plugins:
   - search
   - with-pdf:
       author: Demo Project
-      copyright: 2024
+      copyright: "2024"
       cover_title: Documentation Demo
       output_path: pdf/manual.pdf
       enabled_if_env: ENABLE_PDF_EXPORT
