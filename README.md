@@ -11,17 +11,6 @@ mkdocs serve
 # Terminal 2: Start Decap CMS backend
 npx decap-server
 ```
-
-### For Bash/Zsh:
-```bash
-# Terminal 1: Start MkDocs server
-source venv/bin/activate
-mkdocs serve
-
-# Terminal 2: Start Decap CMS backend
-npx decap-server
-```
-
 ## Troubleshooting
 
 ### Port Already in Use Error:
@@ -34,10 +23,6 @@ pkill -f "decap-server"
 mkdocs serve --dev-addr=127.0.0.1:8001
 ```
 
-### Browser Console Warnings:
-- CSP warnings about favicon.ico are normal and don't affect functionality
-- "Content-Security-Policy" errors can be safely ignored during development
-
 ## Access Points
 
 - **Documentation Site**: http://127.0.0.1:8000/
@@ -48,12 +33,6 @@ mkdocs serve --dev-addr=127.0.0.1:8001
 ### Fish Shell:
 ```fish
 source venv/bin/activate.fish
-mkdocs build
-```
-
-### Bash/Zsh:
-```bash
-source venv/bin/activate
 mkdocs build
 ```
 

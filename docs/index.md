@@ -1,49 +1,20 @@
----
-title: Documentation Demo
-author: Demo Project
-date: 2024
----
-# Documentation Demo
+A New Standard for Our Documentation
+====================================
 
-This demonstrates a docs-as-code workflow with automated builds and web-based editing.
+This presentation demonstrates the high-quality, professional standard now achievable for all company technical manuals through **Project Unidoc**.
 
-## Features
+The core of this new standard is delivering documentation that is not only accurate and easy to maintain, but also highly accessible and user-friendly.
 
-* Markdown-based content
-* Web-based editing interface  
-* Automated website generation
-* PDF export capability
+### Live Demonstration: The Modern Web-Based Manual
 
-## Getting Started
+As the first step, we'll look at the live, searchable website version of our software manual.
 
-1. Edit content through the admin interface at `/admin/`
-2. Changes trigger automatic rebuilds
-3. View results at the published site
+**Key Features to Notice:**
 
-## Architecture
+-   **Instant Access:** The site is fast, responsive, and works in any modern browser.
 
-The system combines:
+-   **Powerful Search:** The entire manual is indexed for instant, accurate search results, making it incredibly easy for users to find the information they need.
 
-* **MkDocs** for static site generation
-* **Decap CMS** for web-based editing
-* **GitHub Actions** for automation
-* **LaTeX** for PDF generation
+-   **Always Up-to-Date:** Because this site is built automatically from our central source, it is guaranteed to always reflect the latest approved information.
 
-## Sample Content
-
-### Code Example
-
-```python
-def build_docs():
-    """Generate documentation from Markdown."""
-    return "Documentation built successfully"
-```
-
-### Table
-
-| Output  | Format | Status |
-| ------- | ------ | ------ |
-| Website | HTML   | ✅      |
-| PDF     | LaTeX  | ✅      |
-
-This demonstrates professional documentation workflow capabilities.
+-   **Future-Ready:** The same system that builds this website can also package it into a standalone desktop app for offline use by our service engineers in the future.

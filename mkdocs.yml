@@ -1,6 +1,5 @@
-site_name: Documentation Demo
-site_description: Docs-as-code demonstration
-# site_url: https://sorbieskis.github.io/docs-as-code-demo/  # Commented for local development
+site_name: Project Unidoc Demo
+site_description: A presentation and demonstration of the Project Unidoc docs-as-code system.
 
 repo_url: https://github.com/Sorbieskis/docs-as-code-demo
 repo_name: sorbieskis/docs-as-code-demo
@@ -10,21 +9,36 @@ theme:
   features:
     - navigation.top
     - search.highlight
+    - content.code.copy
+  palette:
+    # Palette toggle for light vs dark mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
 
 plugins:
   - search
-  - with-pdf:
-      author: Demo Project
-      copyright: "2024"
-      cover_title: Documentation Demo
-      output_path: pdf/manual.pdf
-      cover_subtitle: Automated Documentation Pipeline
-      custom_template_path: template.latex
 
+# Navigation structure for the presentation
 nav:
-  - Home: index.md
+  - 'Home: A New Standard': 'index.md'
+  - 'The Problem': 'problem.md'
+  - 'The Solution': 'solution.md'
+  - 'Live Demo': 'demo.md'
+  - 'Project Structure': 'structure.md'
 
 markdown_extensions:
-  - toc
+  - toc:
+      permalink: true
   - tables
   - fenced_code
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
