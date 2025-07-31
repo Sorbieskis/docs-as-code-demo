@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -163,7 +163,7 @@ jobs:
             --variable=date:"$DATE" \
             --toc \
             --number-sections \
-            --highlight-style=github \
+            --highlight-style=pygments \
             -o manual.pdf
           
           # Verify PDF was created

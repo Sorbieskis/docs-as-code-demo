@@ -1,66 +1,29 @@
-site_name: Sorbieskis Docs Demo
-site_description: A demonstration of docs-as-code with web editing and automated builds
+site_name: Documentation Demo
+site_description: Docs-as-code demonstration
 site_url: https://sorbieskis.github.io/docs-as-code-demo/
+
 repo_url: https://github.com/Sorbieskis/docs-as-code-demo
-repo_name: Sorbieskis/docs-as-code-demo
+repo_name: sorbieskis/docs-as-code-demo
 
 theme:
   name: material
   features:
-    - navigation.tabs
-    - navigation.sections
-    - navigation.expand
     - navigation.top
     - search.highlight
-    - search.share
-    - content.code.copy
-  palette:
-    - scheme: default
-      primary: blue
-      accent: blue
-      toggle:
-        icon: material/brightness-7
-        name: Switch to dark mode
-    - scheme: slate
-      primary: blue
-      accent: blue
-      toggle:
-        icon: material/brightness-4
-        name: Switch to light mode
 
 plugins:
   - search
   - with-pdf:
-      author: Sorbieskis
-      copyright: Copyright © 2024 Sorbieskis
-      cover_title: Sorbieskis Documentation
-      cover_subtitle: Complete User Manual
+      author: Demo Project
+      copyright: 2024
+      cover_title: Documentation Demo
       output_path: pdf/manual.pdf
       enabled_if_env: ENABLE_PDF_EXPORT
 
-markdown_extensions:
-  - admonition
-  - pymdownx.details
-  - pymdownx.superfences
-  - pymdownx.highlight:
-      anchor_linenums: true
-  - pymdownx.inlinehilite
-  - pymdownx.snippets
-  - pymdownx.tabbed:
-      alternate_style: true
-  - attr_list
-  - md_in_html
-  - tables
-  - toc:
-      permalink: true
-
 nav:
   - Home: index.md
-  - Live Editing Test: test-live-editing.md
 
-extra:
-  social:
-    - icon: fontawesome/brands/github
-      link: https://github.com/Sorbieskis/docs-as-code-demo
-  version:
-    provider: mike
+markdown_extensions:
+  - toc
+  - tables
+  - fenced_code

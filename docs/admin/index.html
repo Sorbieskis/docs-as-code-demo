@@ -3,64 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Content Manager - Docs as Code</title>
-  <!-- Include the script that builds the page and powers Decap CMS -->
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-  <!-- Include additional styles for better UI -->
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 
-        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-    }
-    .setup-notice {
-      background: #f0f8ff;
-      border: 2px solid #2196f3;
-      border-radius: 8px;
-      padding: 20px;
-      margin: 20px;
-      text-align: center;
-    }
-    .setup-notice h2 {
-      color: #1976d2;
-      margin-top: 0;
-    }
-    .setup-steps {
-      text-align: left;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    .setup-steps li {
-      margin: 10px 0;
-    }
-  </style>
+  <title>Content Manager</title>
 </head>
 <body>
-  <!-- Setup instructions for first-time users -->
-  <div id="setup-notice" class="setup-notice">
-    <h2>🔧 CMS Setup Required</h2>
-    <p>The Content Management System is almost ready! To enable full editing capabilities:</p>
-    <div class="setup-steps">
-      <ol>
-        <li><strong>For immediate testing</strong>: Edit files directly in <code>docs/</code> folder</li>
-        <li><strong>For full CMS</strong>: Set up GitHub OAuth (see CMS-SETUP-GUIDE.md)</li>
-        <li><strong>Alternative</strong>: Deploy to GitHub Pages for auto-authentication</li>
-      </ol>
-    </div>
-    <p><strong>Live editing works now!</strong> Try editing <code>docs/index.md</code> and watch the browser refresh automatically.</p>
-    <button onclick="document.getElementById('setup-notice').style.display='none'">Continue to CMS Interface</button>
-  </div>
-
-  <!-- CMS Preview styles -->
-  <script>
-    CMS.registerPreviewStyle("https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css");
-    
-    // Add helpful error handling
-    window.addEventListener('error', function(e) {
-      console.log('CMS Error:', e.message);
-      if (e.message.includes('auth') || e.message.includes('login')) {
-        console.log('Authentication required - see setup guide');
-      }
-    });
-  </script>
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </body>
 </html>
