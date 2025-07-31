@@ -1,10 +1,13 @@
 ---
 title: "Home: A New Standard"
 ---
-
 # A New Standard for Our Documentation
 
 This presentation demonstrates the high-quality, professional standard now achievable for all company technical manuals through **Project Unidoc**.
+
+TEST
+
+![](https://www.azoquantum.com/images/Article_Images/ImageForArticle_549_17288689857007544.jpg)
 
 The core of this new standard is delivering documentation that is not only accurate and easy to maintain, but also highly accessible and user-friendly.
 

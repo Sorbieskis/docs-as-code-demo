@@ -47,7 +47,6 @@ plugins:
       output_path: pdf/unidoc-manual.pdf
       cover_subtitle: "Enterprise Documentation Management System"
       custom_template_path: template.latex
-      enabled_if_env: ENABLE_PDF_EXPORT
 
 markdown_extensions:
   - admonition
