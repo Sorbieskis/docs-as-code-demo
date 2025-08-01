@@ -1,4 +1,4 @@
-name: Build and Deploy Docs
+name: Build Docs and Generate PDFs
 
 on:
   push:
@@ -7,15 +7,9 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 
 jobs:
-  deploy-website:
+  build-website:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -38,11 +32,31 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Build and deploy MkDocs
-        env:
-          ENABLE_PDF_EXPORT: 1
+      - name: Assemble manuals from components
         run: |
-          mkdocs gh-deploy --force --verbose
+          # Run simple assembly script
+          chmod +x assemble.sh
+          ./assemble.sh
+
+      - name: Quality Gate - Spell Check
+        uses: streetsidesoftware/cspell-action@v6
+        with:
+          files: |
+            docs/**/*.md
+            assembled/**/*.md
+          config: .cspell.json
+          strict: true
+
+      - name: Quality Gate - Link Check
+        uses: lycheeverse/lychee-action@v1.10.0
+        with:
+          args: --verbose --no-progress 'docs/**/*.md' 'assembled/**/*.md'
+          fail: true
+
+      - name: Build website for Netlify
+        run: |
+          # Build the MkDocs site (Netlify will handle deployment)
+          mkdocs build --verbose
 
   generate-pdf:
     runs-on: ubuntu-latest
@@ -55,135 +69,48 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y pandoc texlive-xetex texlive-fonts-recommended texlive-plain-generic
 
-      - name: Set up Python (for metadata extraction)
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install Python dependencies
+      - name: Assemble manuals from components
         run: |
-          pip install pyyaml
+          # Run simple assembly script
+          chmod +x assemble.sh
+          ./assemble.sh
 
-      - name: Extract metadata and generate PDF
+      - name: Generate PDFs from assembled manuals
         run: |
-          # Extract metadata from docs/index.md
-          python -c "
-          import yaml
-          import re
+          # Generate PDF for each assembled manual
+          for manual_file in assembled/*.md; do
+            if [ -f "$manual_file" ]; then
+              manual_name=$(basename "$manual_file" .md)
+              echo "Generating PDF for: $manual_name"
+              
+              pandoc "$manual_file" \
+                --pdf-engine=xelatex \
+                --variable=title:"$(grep '^title:' "$manual_file" | sed 's/title: *//' | tr -d '"')" \
+                --variable=author:"$(grep '^author:' "$manual_file" | sed 's/author: *//' | tr -d '"')" \
+                --variable=date:"$(grep '^date:' "$manual_file" | sed 's/date: *//' | tr -d '"')" \
+                --toc \
+                --number-sections \
+                --highlight-style=pygments \
+                -o "${manual_name}.pdf"
+              
+              echo "✓ Generated: ${manual_name}.pdf"
+            fi
+          done
           
-          with open('docs/index.md', 'r') as f:
-              content = f.read()
-          
-          # Extract YAML frontmatter
-          if content.startswith('---'):
-              parts = content.split('---', 2)
-              if len(parts) >= 3:
-                  frontmatter = yaml.safe_load(parts[1])
-                  body = parts[2].strip()
-              else:
-                  frontmatter = {}
-                  body = content
-          else:
-              frontmatter = {}
-              body = content
-          
-          # Set default values
-          title = frontmatter.get('title', 'Documentation Demo')
-          author = frontmatter.get('author', 'Demo Project')
-          date = frontmatter.get('date', '2024-01-30')
-          
-          # Write temporary markdown file without frontmatter
-          with open('temp_content.md', 'w') as f:
-              f.write(body)
-          
-          print(f'Title: {title}')
-          print(f'Author: {author}')
-          print(f'Date: {date}')
-          "
+          # List generated PDFs
+          ls -la *.pdf
 
-      - name: Generate PDF with Pandoc
-        run: |
-          # Extract metadata for Pandoc
-          TITLE=$(python -c "
-          import yaml
-          with open('docs/index.md', 'r') as f:
-              content = f.read()
-          if content.startswith('---'):
-              parts = content.split('---', 2)
-              if len(parts) >= 3:
-                  frontmatter = yaml.safe_load(parts[1])
-                  print(frontmatter.get('title', 'Documentation Demo'))
-              else:
-                  print('Documentation Demo')
-          else:
-              print('Documentation Demo')
-          ")
-          
-          AUTHOR=$(python -c "
-          import yaml
-          with open('docs/index.md', 'r') as f:
-              content = f.read()
-          if content.startswith('---'):
-              parts = content.split('---', 2)
-              if len(parts) >= 3:
-                  frontmatter = yaml.safe_load(parts[1])
-                  print(frontmatter.get('author', 'Demo Project'))
-              else:
-                  print('Demo Project')
-          else:
-              print('Demo Project')
-          ")
-          
-          DATE=$(python -c "
-          import yaml
-          from datetime import datetime
-          with open('docs/index.md', 'r') as f:
-              content = f.read()
-          if content.startswith('---'):
-              parts = content.split('---', 2)
-              if len(parts) >= 3:
-                  frontmatter = yaml.safe_load(parts[1])
-                  date_val = frontmatter.get('date', datetime.now().strftime('%Y-%m-%d'))
-                  if isinstance(date_val, str):
-                      print(date_val)
-                  else:
-                      print(date_val.strftime('%Y-%m-%d'))
-              else:
-                  print(datetime.now().strftime('%Y-%m-%d'))
-          else:
-              print(datetime.now().strftime('%Y-%m-%d'))
-          ")
-          
-          # Generate PDF using Pandoc with XeLaTeX
-          pandoc docs/index.md \
-            --template=template.latex \
-            --pdf-engine=xelatex \
-            --variable=title:"$TITLE" \
-            --variable=author:"$AUTHOR" \
-            --variable=date:"$DATE" \
-            --toc \
-            --number-sections \
-            --highlight-style=pygments \
-            -o manual.pdf
-          
-          # Verify PDF was created
-          if [ -f manual.pdf ]; then
-            echo "PDF generated successfully"
-            ls -la manual.pdf
-          else
-            echo "Failed to generate PDF"
-            exit 1
-          fi
-
-      - name: Upload PDF artifact
+      - name: Upload PDF artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: documentation-pdf
-          path: manual.pdf
+          name: documentation-pdfs
+          path: |
+            *.pdf
           retention-days: 30
 
-      - name: Upload PDF to release (if tag)
+      - name: Upload PDFs to release (if tag)
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v1
         with:
-          files: manual.pdf
+          files: |
+            *.pdf

@@ -1,0 +1,32 @@
+[build]
+  # Build command that assembles manuals and builds the MkDocs site
+  command = "chmod +x assemble.sh && ./assemble.sh && mkdocs build"
+  
+  # Directory that contains the built site
+  publish = "site/"
+
+[build.environment]
+  # Python version for MkDocs and dependencies
+  PYTHON_VERSION = "3.11"
+
+# Quality gate commands that run before build
+[[plugins]]
+  package = "@netlify/plugin-inline-functions-env"
+
+# Headers for security (optional but recommended)
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+
+# Redirect configuration for admin access
+[[redirects]]
+  from = "/admin/*"
+  to = "/admin/index.html"
+  status = 200
+
+# Enable Netlify Identity for CMS authentication
+[template.environment]
+  NETLIFY_IDENTITY = "true"

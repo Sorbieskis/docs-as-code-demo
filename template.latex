@@ -1,4 +1,4 @@
-\documentclass[11pt,article,oneside]{memoir}
+\documentclass[12pt,article,oneside]{memoir}
 
 % Essential packages
 \usepackage[utf8]{inputenc}
@@ -7,17 +7,23 @@
 \usepackage{microtype}
 \usepackage[english]{babel}
 
-% Page layout
+% Page layout (1 inch margins as per style guide)
 \usepackage[a4paper, margin=1in]{geometry}
 
 % Graphics and colors
 \usepackage{graphicx}
 \usepackage{xcolor}
-\definecolor{linkcolor}{RGB}{0,102,204}
-\definecolor{codebackground}{RGB}{245,245,245}
+
+% Ventil Test Equipment Brand Colors (from style guide)
+\definecolor{ventilblue}{RGB}{33,150,243}      % Primary blue
+\definecolor{ventillightblue}{RGB}{227,242,253} % Light blue background
+\definecolor{textgray}{RGB}{51,51,51}          % Dark gray text
+\definecolor{warningorange}{RGB}{255,152,0}    % Warning orange
+\definecolor{successgreen}{RGB}{76,175,80}     % Success green
+\definecolor{codebackground}{RGB}{245,245,245} % Code background
 
 % Links and PDF features
-\usepackage[colorlinks=true, linkcolor=linkcolor, urlcolor=linkcolor, citecolor=linkcolor]{hyperref}
+\usepackage[colorlinks=true, linkcolor=ventilblue, urlcolor=ventilblue, citecolor=ventilblue]{hyperref}
 \usepackage{bookmark}
 
 % Typography enhancements
@@ -25,12 +31,12 @@
 \usepackage{enumitem}
 \usepackage{caption}
 
-% Code highlighting
+% Code highlighting with custom styling
 \usepackage{fancyvrb}
 \usepackage{fvextra}
 \usepackage{listings}
 
-% Configure code listings
+% Configure code listings per style guide
 \lstset{
     backgroundcolor=\color{codebackground},
     basicstyle=\ttfamily\small,
@@ -39,65 +45,127 @@
     commentstyle=\color{gray},
     frame=single,
     framerule=0pt,
-    keywordstyle=\color{blue},
+    keywordstyle=\color{ventilblue},
     numbers=left,
     numberstyle=\tiny\color{gray},
-    stringstyle=\color{red},
-    tabsize=2
+    stringstyle=\color{successgreen},
+    tabsize=2,
+    numbersep=5pt
 }
 
-% Tables
+% Tables with professional styling
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
 
-% Math (if needed)
+% Math support
 \usepackage{amsmath}
 \usepackage{amssymb}
 
-% Custom title formatting
+% Custom title formatting (Ventil brand style)
 \titleformat{\section}
-  {\Large\bfseries\color{linkcolor}}
+  {\Large\bfseries\color{ventilblue}}
   {\thesection}
   {1em}
   {}
+  [\titlerule[0.5pt]]
 
 \titleformat{\subsection}
-  {\large\bfseries}
+  {\large\bfseries\color{textgray}}
   {\thesubsection}
   {1em}
   {}
 
-% Header and footer
+\titleformat{\subsubsection}
+  {\normalsize\bfseries\color{textgray}}
+  {\thesubsubsection}
+  {1em}
+  {}
+
+% Header and footer (per style guide)
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[R]{\thepage}
-\fancyhead[L]{\nouppercase{\leftmark}}
+\fancyhead[L]{\color{textgray}\small $title$}
+\fancyhead[R]{\color{textgray}\small\nouppercase{\leftmark}}
+\fancyfoot[C]{\color{textgray}\thepage}
+\fancyfoot[R]{\color{textgray}\small $date$}
 \renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Special styling for first page (no header)
+\fancypagestyle{firstpage}{
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}
+}
 
 % Document properties
 \title{$title$}
 \author{$author$}
 \date{$date$}
 
-% PDF metadata
+% Enhanced PDF metadata
 \hypersetup{
     pdftitle={$title$},
     pdfauthor={$author$},
-    pdfsubject={Documentation},
-    pdfkeywords={documentation, manual, guide},
-    pdfcreator={LaTeX with Pandoc},
-    pdfproducer={Docs-as-Code Demo}
+    pdfsubject={Ventil Test Equipment Documentation},
+    pdfkeywords={ventil, test equipment, manual, technical documentation, CRS10},
+    pdfcreator={Project Unidoc Documentation System},
+    pdfproducer={Ventil Test Equipment - Docs-as-Code Pipeline}
 }
 
-% Custom commands
-\newcommand{\highlight}[1]{\colorbox{yellow}{#1}}
-\newenvironment{note}
-    {\begin{quote}\textbf{Note:}\space}
-    {\end{quote}}
+% Custom environments for callouts (per style guide)
+\usepackage{tcolorbox}
 
-% Improved spacing
+% Warning callout
+\newtcolorbox{warning}{
+    colback=warningorange!10,
+    colframe=warningorange,
+    leftrule=3mm,
+    rightrule=0mm,
+    toprule=0mm,
+    bottomrule=0mm,
+    arc=0mm,
+    outer arc=0mm,
+    left=3mm,
+    title={\textbf{⚠️ Warning}},
+    fonttitle=\bfseries
+}
+
+% Tip callout
+\newtcolorbox{tip}{
+    colback=successgreen!10,
+    colframe=successgreen,
+    leftrule=3mm,
+    rightrule=0mm,
+    toprule=0mm,
+    bottomrule=0mm,
+    arc=0mm,
+    outer arc=0mm,
+    left=3mm,
+    title={\textbf{💡 Tip}},
+    fonttitle=\bfseries
+}
+
+% Note callout
+\newtcolorbox{note}{
+    colback=ventillightblue,
+    colframe=ventilblue,
+    leftrule=3mm,
+    rightrule=0mm,
+    toprule=0mm,
+    bottomrule=0mm,
+    arc=0mm,
+    outer arc=0mm,
+    left=3mm,
+    title={\textbf{📋 Note}},
+    fonttitle=\bfseries
+}
+
+% Professional spacing (1.2x line spacing per style guide)
+\usepackage{setspace}
+\setstretch{1.2}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
 
@@ -105,32 +173,62 @@
 \setlist[itemize]{itemsep=2pt, parsep=0pt, topsep=4pt}
 \setlist[enumerate]{itemsep=2pt, parsep=0pt, topsep=4pt}
 
+% Professional table styling
+\captionsetup[table]{position=top, labelfont=bf, textfont=normal}
+\captionsetup[figure]{position=bottom, labelfont=bf, textfont=normal}
+
 % Start document
 \begin{document}
 
-% Title page
+% Professional title page
+\thispagestyle{firstpage}
 \begin{titlingpage}
 \centering
-\vspace*{2cm}
+\vspace*{1cm}
 
-{\Huge\bfseries $title$ \par}
-\vspace{1.5cm}
-{\Large $author$ \par}
-\vspace{1cm}
-{\large $date$ \par}
-
-\vfill
-
-% Logo or additional info could go here
-{\large Generated by Docs-as-Code Demo \par}
+% Company branding area (logo would go here)
+{\Large\color{ventilblue}\textbf{VENTIL TEST EQUIPMENT}\par}
 \vspace{0.5cm}
-{\normalsize Professional Documentation Pipeline \par}
+{\large\color{textgray}Professional Documentation System\par}
+
+\vspace{3cm}
+
+% Manual title
+{\huge\bfseries\color{textgray}$title$\par}
+\vspace{0.5cm}
+
+% Subtitle/description if available
+$if(description)$
+{\Large\color{textgray}$description$\par}
+\vspace{1cm}
+$endif$
+
+% Document metadata
+\vfill
+\begin{tabular}{@{}ll@{}}
+\textbf{Author:} & $author$ \\
+\textbf{Date:} & $date$ \\
+\textbf{Version:} & 1.0 \\
+\textbf{System:} & Project Unidoc
+\end{tabular}
+
+\vspace{1cm}
+
+% Professional footer
+{\small\color{textgray}
+Generated by Project Unidoc Documentation System\\
+Ventil Test Equipment - Enterprise Documentation Pipeline
+\par}
 
 \end{titlingpage}
 
-% Table of contents
+% Table of contents with professional styling
+\thispagestyle{firstpage}
 \tableofcontents
 \newpage
+
+% Reset page numbering for main content
+\setcounter{page}{1}
 
 % Main content
 $body$
@@ -138,8 +236,8 @@ $body$
 % Bibliography (if needed)
 $if(bibliography)$
 \newpage
-\bibliography{$bibliography$}
 \bibliographystyle{plain}
+\bibliography{$bibliography$}
 $endif$
 
 \end{document}

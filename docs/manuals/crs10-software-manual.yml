@@ -1,0 +1,8 @@
+title: "CRS10 Software Manual"
+author: "Ventil Engineering Team"
+date: "2025-01-30"
+description: "Complete installation and operation guide for CRS10 testing software"
+chapters:
+  - content/components/crs10-header.md
+  - content/components/crs10-introduction.md
+  - content/components/crs10-installation.md

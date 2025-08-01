@@ -1,12 +1,13 @@
 ---
-title: "The Problem"
+title: "Problem Analysis"
+component_type: "unique"
 ---
 
 # Solving Our Core Documentation Challenges
 
 "Project Unidoc" was designed to solve specific, long-standing problems with the previous documentation process. The old workflow, while familiar, created significant inefficiencies and quality control issues.
 
-### Key Problems with the "Old Way"
+## Key Problems with the "Old Way"
 
 -   **No Single Source of Truth**
 

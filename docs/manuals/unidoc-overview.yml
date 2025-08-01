@@ -1,0 +1,11 @@
+title: "Project Unidoc Overview"
+author: "Project Unidoc Team"
+date: "2025-01-30"
+description: "Complete overview of the Project Unidoc documentation system"
+chapters:
+  - content/components/company-header.md
+  - content/components/home-introduction.md
+  - content/components/problem-analysis.md
+  - content/components/solution-overview.md
+  - content/components/scaling-capabilities.md
+  - content/components/business-value.md

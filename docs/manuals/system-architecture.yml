@@ -1,0 +1,8 @@
+title: "System Architecture Guide"
+author: "Project Unidoc Team"
+date: "2025-01-30"
+description: "Technical architecture and implementation details"
+chapters:
+  - content/components/company-header.md
+  - content/components/structure-overview.md
+  - content/components/component-authoring.md
