@@ -9,9 +9,7 @@
   # Python version for MkDocs and dependencies
   PYTHON_VERSION = "3.11"
 
-# Quality gate commands that run before build
-[[plugins]]
-  package = "@netlify/plugin-inline-functions-env"
+# Plugin removed - not needed for this project
 
 # Headers for security (optional but recommended)
 [[headers]]
@@ -27,6 +25,4 @@
   to = "/admin/index.html"
   status = 200
 
-# Enable Netlify Identity for CMS authentication
-[template.environment]
-  NETLIFY_IDENTITY = "true"
+# Netlify Identity will be enabled via the Netlify dashboard
