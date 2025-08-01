@@ -19,10 +19,22 @@ theme:
   - content.code.copy
 nav:
 - Home: index.md
+- Problem: problem.md
+- Solution: solution.md
+- Architecture: structure.md
+- Demo: demo.md
 - Manuals:
-  - CRS10 Software Manual: crs10-software-manual.md
-  - System Architecture Guide: system-architecture.md
-  - Project Unidoc Overview: unidoc-overview.md
+  - User Guide: manuals/user-guide.md
+  - Admin Manual: manuals/admin-manual.md
+  - API Reference: manuals/api-reference.md
+  - Deployment Guide: manuals/deployment.md
+- Process:
+  - Workflow: process/workflow.md
+  - Quality Control: process/quality.md
+- PRD: PRD.md
+- Assembled Manuals:
+    Project Unidoc Overview: unidoc-overview.md
+    System Architecture Guide: system-architecture.md
 plugins:
 - search
 - git-revision-date-localized:
@@ -45,3 +57,7 @@ markdown_extensions:
     permalink: true
 - tables
 - fenced_code
+
+
+hp sywstem.md 
+ak
