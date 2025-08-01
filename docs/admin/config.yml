@@ -1,0 +1,71 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: 'docs/assets/images'
+public_folder: '/assets/images'
+
+collections:
+  # Content Components Collection (PRD: content "chapters")
+  - name: 'components'
+    label: '📝 Content Components'
+    label_singular: 'Component'
+    description: 'Edit content components that will be used to build manuals'
+    folder: 'docs/content/components'
+    create: true
+    delete: true
+    slug: '{{slug}}'
+    fields:
+      - label: 'Title'
+        name: 'title'
+        widget: 'string'
+      - label: 'Component Type'
+        name: 'component_type'
+        widget: 'select'
+        options: ['reusable', 'unique']
+        default: 'unique'
+      - label: 'Content'
+        name: 'body'
+        widget: 'markdown'
+
+  # Manual Assembly Collection (PRD: "simple dropdown interface")
+  - name: 'manuals'
+    label: '📚 Assemble Manuals'
+    label_singular: 'Manual'
+    description: 'Create manuals by selecting and ordering content components'
+    folder: 'docs/manuals'
+    create: true
+    delete: true
+    extension: 'yml'
+    slug: '{{slug}}'
+    fields:
+      - label: 'Manual Title'
+        name: 'title'
+        widget: 'string'
+      - label: 'Author'
+        name: 'author'
+        widget: 'string'
+        default: 'Project Unidoc Team'
+      - label: 'Date'
+        name: 'date'
+        widget: 'datetime'
+        format: 'YYYY-MM-DD'
+      - label: 'Description'
+        name: 'description'
+        widget: 'text'
+        required: false
+      - label: 'Chapters'
+        name: 'chapters'
+        widget: 'list'
+        hint: 'Drag to reorder. Click "Add" to select components.'
+        fields:
+          - label: 'Select Component'
+            name: 'chapter'
+            widget: 'relation'
+            collection: 'components'
+            search_fields: ['title']
+            value_field: 'content/components/{{slug}}.md'
+            display_fields: ['title']
+
+editor:
+  preview: true
