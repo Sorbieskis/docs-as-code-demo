@@ -1,6 +1,6 @@
 [build]
   # Build command that assembles manuals and builds the MkDocs site
-  command = "chmod +x assemble.sh && ./assemble.sh && mkdocs build"
+  command = "python assemble.py && mkdocs build"
   
   # Directory that contains the built site
   publish = "site/"

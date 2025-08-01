@@ -34,9 +34,8 @@ jobs:
 
       - name: Assemble manuals from components
         run: |
-          # Run simple assembly script
-          chmod +x assemble.sh
-          ./assemble.sh
+          # Run Python assembly script
+          python assemble.py
 
       - name: Quality Gate - Spell Check
         uses: streetsidesoftware/cspell-action@v6
@@ -64,6 +63,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Python dependencies
+        run: |
+          pip install -r requirements.txt
+
       - name: Install Pandoc and LaTeX
         run: |
           sudo apt-get update
@@ -71,9 +80,8 @@ jobs:
 
       - name: Assemble manuals from components
         run: |
-          # Run simple assembly script
-          chmod +x assemble.sh
-          ./assemble.sh
+          # Run Python assembly script
+          python assemble.py
 
       - name: Generate PDFs from assembled manuals
         run: |

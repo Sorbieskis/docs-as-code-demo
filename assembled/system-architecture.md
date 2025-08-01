@@ -5,7 +5,6 @@ date: "2025-01-30"
 description: "Technical architecture and implementation details"
 ---
 
-
 ---
 title: "Company Header"
 component_type: "reusable"
@@ -14,9 +13,6 @@ component_type: "reusable"
 # Project Unidoc
 
 *Enterprise Documentation Management System*
-
----
-
 
 ---
 title: "Structure Overview"
@@ -69,9 +65,6 @@ The repository is organized to clearly separate source content, configuration, a
 -   `template.latex`: The master LaTeX template that defines the style and structure of all generated PDF documents.
 
 ---
-
-
----
 title: "Component Authoring"
 component_type: "unique"
 ---
@@ -112,6 +105,4 @@ To adhere to the **DRY (Don't Repeat Yourself)** principle, our manuals are not 
 ## How It Comes Together
 
 The build process is configured to understand YAML assembly files. When it builds a manual, it starts with the **Master Assembly File**, reads the list of chapters, and stitches them together into a single, complete document before converting it to its final format.
-
----
 

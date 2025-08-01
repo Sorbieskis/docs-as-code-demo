@@ -5,7 +5,6 @@ date: "2025-01-30"
 description: "Complete overview of the Project Unidoc documentation system"
 ---
 
-
 ---
 title: "Company Header"
 component_type: "reusable"
@@ -14,9 +13,6 @@ component_type: "reusable"
 # Project Unidoc
 
 *Enterprise Documentation Management System*
-
----
-
 
 ---
 title: "Home Introduction"
@@ -39,9 +35,6 @@ As the first step, we'll look at the live, searchable website version of our sof
 * **Powerful Search:** The entire manual is indexed for instant, accurate search results, making it incredibly easy for users to find the information they need.
 * **Always Up-to-Date:** Because this site is built automatically from our central source, it is guaranteed to always reflect the latest approved information.
 * **Future-Ready:** The same system that builds this website can also package it into a standalone desktop app for offline use by our service engineers in the future.
-
----
-
 
 ---
 title: "Problem Analysis"
@@ -75,9 +68,6 @@ component_type: "unique"
     -   The old system provided no safe or structured way for subject matter experts to contribute directly. The new system's review workflow (Pull Requests) acts as a crucial quality gate, enabling anyone---from team leaders to other engineers---to propose changes without risk, eliminating bottlenecks and encouraging collaboration.
 
 ---
-
-
----
 title: "Solution Overview"
 component_type: "unique"
 ---
@@ -102,9 +92,6 @@ This streamlined process reduces manual creation time from weeks to hours.
 ![Technical Architecture Diagram](assets/images/technical-architecture.png)
 
 The system leverages modern CI/CD principles with Git as the single source of truth, automated builds, and multiple output formats from unified source content.
-
----
-
 
 ---
 title: "Scaling Capabilities"
@@ -157,9 +144,6 @@ Project Unidoc is architected to handle enterprise-scale documentation requireme
 - Integration with enterprise authentication systems
 
 ---
-
-
----
 title: "Business Value"
 component_type: "unique"
 ---
@@ -176,6 +160,4 @@ component_type: "unique"
 - **Enterprise application integration** capabilities for embedded documentation
 
 This solution transforms documentation from a cost center into a competitive advantage through systematic automation and scalable architecture.
-
----
 

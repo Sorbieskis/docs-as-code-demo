@@ -5,7 +5,6 @@ date: "2025-01-30"
 description: "Complete installation and operation guide for CRS10 testing software"
 ---
 
-
 ---
 title: "CRS10 Software Manual Header"
 component_type: "unique"
@@ -16,9 +15,6 @@ component_type: "unique"
 **Version 1.0 - Project Unidoc System**
 
 *Professional Documentation for Ventil Test Equipment*
-
----
-
 
 ---
 title: "CRS10 Introduction"
@@ -44,9 +40,6 @@ The CRS10 software is a comprehensive testing platform designed for Ventil test 
 - 500MB available disk space
 - USB 3.0 port for device connectivity
 - Network connectivity for data synchronization
-
----
-
 
 ---
 title: "CRS10 Installation Guide"
@@ -90,6 +83,4 @@ component_type: "unique"
 - Verify hardware connectivity
 - Run built-in diagnostic tests
 - Check log files for any error messages
-
----
 
